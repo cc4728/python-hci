@@ -36,12 +36,14 @@ def _parse_pkt_type(buf, pkt_offset):
 
 def from_binary(buf):
     PACKET_TYPE_SIZE_OCTETS = 1
+    PACKET_HEADER_SIZE_OCTETS = 24
     pkts = []
     pkt_offset = 0
     incomplete_pkt_data = b''
 
-    while (pkt_offset < len(buf)):
+    while (pkt_offset < len(buf) and len(buf) > PACKET_HEADER_SIZE_OCTETS):
         try:
+            pkt_offset += PACKET_HEADER_SIZE_OCTETS
             pkt_type = _parse_pkt_type(buf, pkt_offset)
             pkt_length = _parse_pkt_length(buf, pkt_type, pkt_offset)
         except error:
@@ -57,6 +59,6 @@ def from_binary(buf):
         pkt = HciPacket(pkt_type, pkt_data[PACKET_TYPE_SIZE_OCTETS:])
         pkt = _autocast(pkt)
         pkts.append(pkt)
-
+        print(pkt)
         pkt_offset += pkt_length
     return pkts, incomplete_pkt_data
