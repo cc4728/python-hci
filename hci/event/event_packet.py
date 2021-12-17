@@ -6,12 +6,19 @@ from hci.event.event_codes import EventCodes
 
 class EventPacket(HciPacket):
     OFFSET_DATA_LENGTH = 2
+    EventCodeName = 'UnKnow'
 
     @property
     def event_code(self):
         OFFSET, SIZE_OCTETS = 1, 1
         event_code = self._get_data(OFFSET, SIZE_OCTETS)
         return unpack_from('<B', event_code)[0]
+
+    @property
+    def event_code_name(self):
+        if self.event_code in EventCodes._value2member_map_:
+            self.EventCodeName = EventCodes(self.event_code).name
+        return self.EventCodeName
 
     @property
     def data_length(self):
@@ -21,11 +28,11 @@ class EventPacket(HciPacket):
 
     def __str__(self):
         return super().__str__() + '\n' + '\n'.join([
-            'Event Code: {} ({})',
-            'Data Length: {} ({})',
+            '   Event Code: {} ({})',
+            '   Data Length: {} ({})',
         ]).format(
             hex(self.event_code),
-            EventCodes(self.event_code).name,
+            self.event_code_name,
             hex(self.data_length),
             int(self.data_length),
         )

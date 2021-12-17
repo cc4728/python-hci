@@ -6,6 +6,8 @@ from hci.command.opcode import OpCode
 
 
 class HCI_CommandComplete(EventPacket):
+    OpCodeName = 'UnKnow'
+
     class Status(IntEnum):
         HCI_SUCCESS = 0x00
         HCI_FAILURE = 0x01
@@ -29,19 +31,32 @@ class HCI_CommandComplete(EventPacket):
         return unpack_from('<H', opcode)[0]
 
     @property
+    def opcode_name(self):
+        if self.opcode in OpCode._value2member_map_:
+            self.OpCodeName = OpCode(self.opcode).name
+        return self.OpCodeName
+
+    @property
     def status(self):
         OFFSET, SIZE_OCTETS = 6, 1
         status = self._get_data(OFFSET, SIZE_OCTETS)
         return unpack_from('<B', status)[0]
 
+    @property
+    def status_name(self):
+        name = 'UnKnow'
+        if self.status in HCI_CommandComplete.Status._value2member_map_:
+            name = HCI_CommandComplete.Status(self.status).name
+        return name
+
     def __str__(self):
         return super().__str__() + '\n' + '\n'.join([
-            'Packets: {} ({})',
-            'OpCode: {} ({})',
-            'Status: {} ({})']).format(
+            '   Packets: {} ({})',
+            '   OpCode: {} ({})',
+            '   Status: {} ({})']).format(
             hex(self.packets),
             int(self.packets),
             hex(self.opcode),
-            OpCode(self.opcode).name,
+            self.opcode_name,
             hex(self.status),
-            HCI_CommandComplete.Status(self.status).name)
+            self.status_name)

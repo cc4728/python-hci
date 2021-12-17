@@ -12,8 +12,10 @@ def _autocast(pkt):
         events.HCI_CommandComplete: events.hci_commands_complete._autocast,
     }
     try:
-        pkt.__class__ = _event_code_to_class[pkt.event_code]
-        pkt = _class_to_autocast_func[type(pkt)](pkt)
+        if pkt.event_code in _event_code_to_class.keys():
+            pkt.__class__ = _event_code_to_class[pkt.event_code]
+        if type(pkt) in _class_to_autocast_func.keys():
+            pkt = _class_to_autocast_func[type(pkt)](pkt)
     except KeyError:
         pass
 

@@ -8,6 +8,8 @@ from .opcode import OpCode
 class CommandPacket(HciPacket):
     OFFSET_DATA_LENGTH = 0x03
     OpCode = OpCode
+    OpCodeName = 'UnKnow'
+    OfgName = 'UnKnow'
 
     class Ogf(IntEnum):
         LINK_CONTROL = 1
@@ -37,8 +39,20 @@ class CommandPacket(HciPacket):
         return unpack('<H', data)[0]
 
     @property
+    def opcode_name(self):
+        if self.opcode in OpCode._value2member_map_:
+            self.OpCodeName = OpCode(self.opcode).name
+        return self.OpCodeName
+
+    @property
     def ogf(self):
         return (self.opcode >> 10)
+
+    @property
+    def ogf_name(self):
+        if self.ogf in CommandPacket.Ogf._value2member_map_:
+            self.OfgName = CommandPacket.Ogf(self.ogf).name
+        return self.OfgName
 
     @property
     def ocf(self):
@@ -58,9 +72,9 @@ class CommandPacket(HciPacket):
             'Data Length: {} ({})',
         ]).format(
             hex(self.opcode),
-            OpCode(self.opcode).name,
+            self.opcode_name,
             hex(self.ogf),
-            CommandPacket.Ogf(self.ogf).name,
+            self.ogf_name,
             hex(self.ocf),
             int(self.ocf),
             hex(self.parameter_total_length),

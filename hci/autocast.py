@@ -19,8 +19,10 @@ def _autocast(pkt):
     }
 
     try:
-        pkt.__class__ = _packet_type_to_class[pkt.packet_type]
-        pkt = _class_to_autocast_func[type(pkt)](pkt)
+        if pkt.packet_type in _packet_type_to_class.keys():
+            pkt.__class__ = _packet_type_to_class[pkt.packet_type]
+        if type(pkt) in _class_to_autocast_func.keys():
+            pkt = _class_to_autocast_func[type(pkt)](pkt)
     except KeyError:
         pass
 

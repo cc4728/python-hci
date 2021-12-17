@@ -21,7 +21,8 @@ def _parse_pkt_length(buf, pkt_type, pkt_offset):
     elif (pkt_type == HciPacket.PacketType.ASYNCHRONOUS_DATA):
         offset_data_length = AsynchronousDataPacket.OFFSET_DATA_LENGTH
         offset = pkt_offset + offset_data_length
-        data_length = unpack_from('<H', buf, offset=offset)[0]
+        #acl data len is 2 oct
+        data_length = unpack_from('<H', buf, offset=offset)[0] + 1
 
     else:
         raise NotImplementedError(pkt_type)

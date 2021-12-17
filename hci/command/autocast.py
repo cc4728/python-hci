@@ -75,7 +75,8 @@ def _autocast(pkt):
     }
 
     try:
-        pkt.__class__ = _opcode_to_class[pkt.opcode]
+        if pkt.opcode in _opcode_to_class.keys():
+            pkt.__class__ = _opcode_to_class[pkt.opcode]
     except KeyError:
         pass
 
