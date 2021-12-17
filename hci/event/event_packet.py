@@ -28,8 +28,7 @@ class EventPacket(HciPacket):
 
     def __str__(self):
         return super().__str__() + '\n' + '\n'.join([
-            '   Event Code: {} ({})',
-            '   Data Length: {} ({})',
+            '   Event Code: {} ({})   Length: {} ({})',
         ]).format(
             hex(self.event_code),
             self.event_code_name,

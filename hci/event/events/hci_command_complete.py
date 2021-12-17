@@ -51,11 +51,7 @@ class HCI_CommandComplete(EventPacket):
 
     def __str__(self):
         return super().__str__() + '\n' + '\n'.join([
-            '   Packets: {} ({})',
-            '   OpCode: {} ({})',
-            '   Status: {} ({})']).format(
-            hex(self.packets),
-            int(self.packets),
+            '   OpCode: {} ({})     Status: {} ({})']).format(
             hex(self.opcode),
             self.opcode_name,
             hex(self.status),

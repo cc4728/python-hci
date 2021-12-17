@@ -13,7 +13,7 @@ class AsynchronousDataPacket(HciPacket):
 
     def __str__(self):
         return super().__str__() + '\n' + '\n'.join([
-            'Acl Data Length: {} ({})',
+            '   Acl Length: {} ({})',
         ]).format(
             hex(self.data_length),
             int(self.data_length),

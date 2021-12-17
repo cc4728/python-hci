@@ -66,10 +66,8 @@ class CommandPacket(HciPacket):
 
     def __str__(self):
         return super().__str__() + '\n' + '\n'.join([
-            'OpCode: {} ({})',
-            '  OGF: {} ({})',
-            '  OCF: {} ({})',
-            'Data Length: {} ({})',
+            '   OpCode: {} ({})',
+            '   OGF: {} ({})    OCF: {} ({})    Length: {} ({})'
         ]).format(
             hex(self.opcode),
             self.opcode_name,
