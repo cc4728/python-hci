@@ -101,3 +101,4 @@ ENV/
 .mypy_cache/
 demo.frm
 demo.fsc
+/demo.bes

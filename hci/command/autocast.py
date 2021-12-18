@@ -72,6 +72,9 @@ def _autocast(pkt):
 
         OpCode.UTIL_FORCE_BOOT:
             UTIL_ForceBoot,
+
+        OpCode.LE_EXTENDED_CREATE_CONNECTION:
+            LE_ExtendedCreateConnection,
     }
 
     try:

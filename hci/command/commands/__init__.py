@@ -21,3 +21,4 @@ from .le_set_default_phy import LE_SetDefaultPhy
 from .le_set_phy import LE_SetPhy
 from .util_build_revision import UTIL_BuildRevision
 from .util_force_boot import UTIL_ForceBoot
+from .le_extended_create_connection import LE_ExtendedCreateConnection
