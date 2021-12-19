@@ -17,6 +17,7 @@ Description in bluetooth core spec v5.3:
 
 class EventPacket(HciPacket):
     OFFSET_DATA_LENGTH = 2
+    DATA_LENGTH_OCTET = 1
     EventCodeName = 'UnKnow'
 
     @property

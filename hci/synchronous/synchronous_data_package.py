@@ -12,4 +12,5 @@ Description in bluetooth core spec v5.3:
 """
 
 class eSCOPackage(HciPacket):
-    OFFSET_DATA_LENGTH = 4
+    OFFSET_DATA_LENGTH = 3
+    DATA_LENGTH_OCTET = 2

@@ -22,6 +22,7 @@ Description in bluetooth core spec v5.3:
 
 class CommandPacket(HciPacket):
     OFFSET_DATA_LENGTH = 3
+    DATA_LENGTH_OCTET = 1
     OpCode = OpCode
     OpCodeName = 'UnKnow'
     OfgName = 'UnKnow'
