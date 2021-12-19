@@ -2,7 +2,8 @@ from struct import pack, unpack
 from enum import IntEnum
 
 from ..hci_packet import HciPacket
-from .opcode import OpCode
+from .opcode import OpCode,Vendor_Specific,LeControlCommands,LinkPolicyCommands,LinkControlCommands,\
+    ControllerAndBasebandCommands,TestingCommands,StatusParameters,InformationalParameters
 
 """
 Description in bluetooth core spec v5.3:
@@ -37,6 +38,17 @@ class CommandPacket(HciPacket):
         LE_CONTROLLER = 8
         VENDOR_SPECIFIC = 63
 
+    Ogf2Class = {
+        Ogf.LINK_CONTROL:LinkControlCommands,
+        Ogf.LINK_POLICY:LinkPolicyCommands,
+        Ogf.CONTROLLER_AND_BASEBAND:ControllerAndBasebandCommands,
+        Ogf.INFORMATIONAL_PARAMETERS:InformationalParameters,
+        Ogf.STATUS_PARAMETERS:StatusParameters,
+        Ogf.TESTING:TestingCommands,
+        Ogf.LE_CONTROLLER:LeControlCommands,
+        Ogf.VENDOR_SPECIFIC:Vendor_Specific,
+    }
+
     def __init__(self, opcode, parameters=b''):
         super().__init__(
             HciPacket.PacketType.COMMAND,
@@ -55,12 +67,6 @@ class CommandPacket(HciPacket):
         return unpack('<H', data)[0]
 
     @property
-    def opcode_name(self):
-        if self.opcode in OpCode._value2member_map_:
-            self.OpCodeName = OpCode(self.opcode).name
-        return self.OpCodeName
-
-    @property
     def ogf(self):
         return (self.opcode >> 10)
 
@@ -73,6 +79,13 @@ class CommandPacket(HciPacket):
     @property
     def ocf(self):
         return self.opcode & 0x3FF
+
+    @property
+    def opcode_name(self):
+        if self.ogf in CommandPacket.Ogf._value2member_map_:
+            if self.ocf in CommandPacket.Ogf2Class[self.ogf]._value2member_map_:
+                self.OpCodeName = CommandPacket.Ogf2Class[self.ogf](self.ocf).name
+        return self.OpCodeName
 
     @property
     def parameter_total_length(self):

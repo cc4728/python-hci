@@ -415,7 +415,7 @@ class TestingCommands(IntEnum):
     HCI_Write_Secure_Connections_Test_Mode = 0x000A
 
 
-class LeControlCommands (IntEnum):
+class LeControlCommands(IntEnum):
     """
     LE CONTROLLER COMMANDS
     OGF:0X08
@@ -545,3 +545,10 @@ class LeControlCommands (IntEnum):
     HCI_LE_Set_Data_Related_Address_Changes = 0x7C
     HCI_LE_Set_Default_Subrate = 0x007D
     HCI_LE_Subrate_Request = 0x007E
+
+
+class Vendor_Specific(IntEnum):
+    """
+    VENDOR SPECIFIC
+    OGF:0XFE
+    """
