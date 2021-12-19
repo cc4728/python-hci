@@ -11,7 +11,7 @@ class HciPacket:
 
     def __init__(self, packet_type, payload):
         self._data = HciPacket._params_to_binary(packet_type, payload)
-        #print("\n=======================\n",self._data)
+        #print("===",self._data)
 
     @staticmethod
     def _params_to_binary(packet_type, payload):
