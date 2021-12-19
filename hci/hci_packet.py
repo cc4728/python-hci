@@ -8,6 +8,7 @@ class HciPacket:
         ASYNCHRONOUS_DATA = 0x02
         SYNCHRONOUS_DATA = 0x03
         EVENT = 0x04
+        ISO_DATA = 0x05
 
     def __init__(self, packet_type, payload):
         self._data = HciPacket._params_to_binary(packet_type, payload)

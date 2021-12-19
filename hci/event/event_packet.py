@@ -3,6 +3,17 @@ from struct import unpack_from
 from hci import HciPacket
 from hci.event.event_codes import EventCodes
 
+"""
+Description in bluetooth core spec v5.3:
+    The HCI Event packet header is the first 2 octets of the packet.
+    The event code 0xFE is reserved for future use (used for specification development purposes). 
+    The event code 0xFF is reserved for vendor-specific debugging events.
+    0                  8                16                   
+    +------------------+----------------+-------------------------------+
+    |  Event Code      |   Length       |               Data            |                
+    +------------------+----------------+-------------------------------+
+"""
+
 
 class EventPacket(HciPacket):
     OFFSET_DATA_LENGTH = 2
