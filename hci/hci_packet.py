@@ -37,8 +37,7 @@ class HciPacket:
 
     def __str__(self):
         return '\n'.join([
-            'Packet Type: {} ({})',
+            '{}',
         ]).format(
-            hex(self.packet_type),
-            HciPacket.PacketType(self.packet_type).name,
+            HciPacket.PacketType(self.packet_type).name.ljust(10),
         )

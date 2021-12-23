@@ -70,9 +70,7 @@ def from_binary(buf):
         pkt = HciPacket(pkt_type, pkt_data[PACKET_TYPE_SIZE_OCTETS:])
         pkt = _autocast(pkt)
         pkts.append(pkt)
-        if pkt_type == 1:
+        if pkt_type == 2:
             print(pkt)
         pkt_offset += pkt_length
-        #if pkt_offset < 1000:
-        #    break
     return pkts, incomplete_pkt_data

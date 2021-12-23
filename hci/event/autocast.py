@@ -3,6 +3,8 @@ from . import events
 
 
 def _autocast(pkt):
+    return pkt
+
     _event_code_to_class = {
         EventCodes.VENDOR_SPECIFIC_EVENT: events.VendorSpecificEvent,
         EventCodes.HCI_COMMAND_COMPLETE: events.HCI_CommandComplete
