@@ -23,6 +23,9 @@ Description in bluetooth core spec v5.3:
 class CommandPacket(HciPacket):
     OFFSET_DATA_LENGTH = 3
     DATA_LENGTH_OCTET = 1
+    opcodeName = None
+    ogfName = None
+    needParse = None
 
     def __init__(self, opcode, parameters=b''):
         super().__init__(
@@ -42,15 +45,20 @@ class CommandPacket(HciPacket):
         return unpack('<H', data)[0]
 
     @property
+    def name(self):
+        if not self.opcodeName:
+            opCode = OpCode(self.opcode)
+            if opCode.has():
+                self.needParse = True
+            self.opcodeName, self.ogfName = opCode.name()
+        return self.opcodeName, self.ogfName
+
+    @property
     def parameter_total_length(self):
         OFFSET, SIZE_OCTETS = 3, 1
         data = self._get_data(OFFSET, SIZE_OCTETS)
         return unpack('<B', data)[0]
 
     def __str__(self):
-        opCode = OpCode(self.opcode)
-        if opCode.has():
-            a = 1
-        opcode_name ,ogf_name = opCode.name()
-
-        return super().__str__() + '\n'.join(['{} {}']).format(opcode_name.ljust(50),ogf_name.ljust(10),)
+        opcode_name ,ogf_name = self.name
+        return super().__str__() + '\n'.join(['{}']).format(opcode_name.ljust(50),)
