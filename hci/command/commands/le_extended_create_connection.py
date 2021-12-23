@@ -5,7 +5,7 @@ from ..command_packet import CommandPacket
 from hci.transforms import _hex_string_to_bytes
 from hci.transforms import _bytes_to_hex_string
 
-class LE_ExtendedCreateConnection(CommandPacket):
+class HCI_LE_Extended_Create_Connection(CommandPacket):
 
     CONN_PARAMS_LENGTH = 16
 
@@ -20,11 +20,8 @@ class LE_ExtendedCreateConnection(CommandPacket):
         RandomIdentify = 3
 
     def __init__(self, params):
-        super().__init__(
-            # TODO generate cmd
-            CommandPacket.OpCode.LE_EXTENDED_CREATE_CONNECTION,
-            LE_ExtendedCreateConnection._params_to_binary(params)
-        )
+        # TODO generate cmd
+        super().__init__()
 
     @staticmethod
     def _params_to_binary(params):
@@ -86,22 +83,22 @@ class LE_ExtendedCreateConnection(CommandPacket):
         if status & 4:
             msg += "Codec\n\t\t"
             msg += self.parse_conn_params(OFFSET)
-            OFFSET += LE_ExtendedCreateConnection.CONN_PARAMS_LENGTH
+            OFFSET += HCI_LE_Extended_Create_Connection.CONN_PARAMS_LENGTH
         if status & 2:
             msg += "Phy_1m\n\t\t"
             msg += self.parse_conn_params(OFFSET)
-            OFFSET += LE_ExtendedCreateConnection.CONN_PARAMS_LENGTH
+            OFFSET += HCI_LE_Extended_Create_Connection.CONN_PARAMS_LENGTH
         if status & 1:
             msg += "Phy_2m\n\t\t"
             msg += self.parse_conn_params(OFFSET)
         return msg
 
     def __str__(self):
-        return super().__str__() + '\n' + '\n'.join([
-            '   Peer Address: {} ({})',
+        return super().__str__() + '\n'.join([
+            '{} ({})',
             '   {}'
         ]).format(
             _bytes_to_hex_string(self.peer_addr),
-            LE_ExtendedCreateConnection.DeviceType(self.addr_type_peer).name,
+            HCI_LE_Extended_Create_Connection.DeviceType(self.addr_type_peer).name,
             self.conn_params,
         )

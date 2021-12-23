@@ -368,6 +368,8 @@ class OpCode:
         VENDOR SPECIFIC
         OGF:0XFE
         """
+        LE_Get_Vendor_Capabilities_Command = 0x153
+        LE_APCF_Command = 0x157
 
     def __init__(self, opcode):
         self._opcode = opcode
