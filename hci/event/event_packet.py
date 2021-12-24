@@ -18,7 +18,7 @@ Description in bluetooth core spec v5.3:
 class EventPacket(HciPacket):
     OFFSET_DATA_LENGTH = 2
     DATA_LENGTH_OCTET = 1
-    EventCodeName = 'UnKnow'
+    EventCodeName = None
 
     @property
     def event_code(self):
@@ -27,9 +27,12 @@ class EventPacket(HciPacket):
         return unpack_from('<B', event_code)[0]
 
     @property
-    def event_code_name(self):
-        if self.event_code in EventCodes._value2member_map_:
-            self.EventCodeName = EventCodes(self.event_code).name
+    def code_name(self):
+        if not self.EventCodeName:
+            if self.event_code in EventCodes._value2member_map_:
+                self.EventCodeName = EventCodes(self.event_code).name
+            else:
+                self.EventCodeName = hex(self.event_code)
         return self.EventCodeName
 
     @property
@@ -39,11 +42,8 @@ class EventPacket(HciPacket):
         return unpack_from('<B', data_length)[0]
 
     def __str__(self):
-        return super().__str__() + '\n' + '\n'.join([
-            '   Event Code: {} ({})   Length: {} ({})',
+        return super().__str__() + ''.join([
+            '{}',
         ]).format(
-            hex(self.event_code),
-            self.event_code_name,
-            hex(self.data_length),
-            int(self.data_length),
+            self.code_name,
         )
