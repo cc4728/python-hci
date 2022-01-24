@@ -14,7 +14,7 @@ class EventCodes(IntEnum):
     HCI_Change_Connection_Link_Key_Complete = 0x09
     HCI_Link_Key_Type_Changed = 0x0A
     HCI_Read_Remote_Supported_Features_Complete = 0x0B
-    HCI_Read_Remote_Version_Information_Complete = 0x0C
+    HCI_Read_Remote_Version_Info_Complete = 0x0C
     HCI_QoS_Setup_Complete = 0x0D
     HCI_Command_Complete = 0x0E
     HCI_Command_Status = 0x0F
@@ -52,7 +52,7 @@ class EventCodes(IntEnum):
     HCI_Enhanced_Flush_Complete = 0x39
     HCI_User_Passkey_Notification = 0x3B
     HCI_Keypress_Notification = 0x3C
-    HCI_Remote_Host_Supported_Features_Notification = 0x3D
+    HCI_Remote_Host_Supported_Features_Notify = 0x3D
     HCI_Number_Of_Completed_Data_Blocks = 0x48
     LE_Meta_Events = 0x3e
     HCI_Triggered_Clock_Capture = 0x4E
@@ -79,40 +79,3 @@ class EventCodes(IntEnum):
     ENCRYPTION_KEY_REFRESH_COMPLETE = 0x30
     AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED = 0x57
 
-
-class LE_META_EVENTS(IntEnum):
-    HCI_LE_Connection_Complete = 0x01
-    HCI_LE_Advertising_Report = 0x02
-    HCI_LE_Connection_Update_Complete = 0x03
-    HCI_LE_Read_Remote_Features_Complete = 0x04
-    HCI_LE_Long_Term_Key_Request = 0x05
-    HCI_LE_Remote_Connection_Parameter_Request = 0x06
-    HCI_LE_Data_Length_Change = 0x07
-    HCI_LE_Read_Local_P256_Public_Key_Complete = 0x08
-    HCI_LE_Generate_DHKey_Complete = 0x09
-    HCI_LE_Enhanced_Connection_Complete = 0x0A
-    HCI_LE_Directed_Advertising_Report = 0x0B
-    HCI_LE_PHY_Update_Complete = 0x0C
-    HCI_LE_Extended_Advertising_Report = 0x0D
-    HCI_LE_Periodic_Advertising_Sync_Established = 0x0E
-    HCI_LE_Periodic_Advertising_Report = 0x0F
-    HCI_LE_Periodic_Advertising_Sync_Lost = 0x10
-    HCI_LE_Scan_Timeout = 0x11
-    HCI_LE_Advertising_Set_Terminated = 0x12
-    HCI_LE_Scan_Request_Received = 0x13
-    HCI_LE_Channel_Selection_Algorithm = 0x14
-    HCI_LE_Connectionless_IQ_Report = 0x15
-    HCI_LE_Connection_IQ_Report = 0x16
-    HCI_LE_CTE_Request_Failed = 0x17
-    HCI_LE_Periodic_Advertising_Sync_Transfer_Received = 0x18
-    HCI_LE_CIS_Established = 0x19
-    HCI_LE_CIS_Request = 0x1A
-    HCI_LE_Create_BIG_Complete = 0x1B
-    HCI_LE_Terminate_BIG_Complete = 0x1C
-    HCI_LE_BIG_Sync_Established = 0x1D
-    HCI_LE_BIG_Sync_Lost = 0x1E
-    HCI_LE_Request_Peer_SCA_Complete = 0x1F
-    HCI_LE_Path_Loss_Threshold = 0x20
-    HCI_LE_Transmit_Power_Reporting = 0x21
-    HCI_LE_BIGInfo_Advertising_Report = 0x22
-    HCI_LE_Subrate_Change = 0x23

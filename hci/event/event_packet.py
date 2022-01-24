@@ -19,6 +19,7 @@ class EventPacket(HciPacket):
     OFFSET_DATA_LENGTH = 2
     DATA_LENGTH_OCTET = 1
     EventCodeName = None
+    needParse = None
 
     @property
     def event_code(self):
@@ -27,10 +28,11 @@ class EventPacket(HciPacket):
         return unpack_from('<B', event_code)[0]
 
     @property
-    def code_name(self):
+    def name(self):
         if not self.EventCodeName:
             if self.event_code in EventCodes._value2member_map_:
                 self.EventCodeName = EventCodes(self.event_code).name
+                self.needParse = True
             else:
                 self.EventCodeName = hex(self.event_code)
         return self.EventCodeName
@@ -42,8 +44,4 @@ class EventPacket(HciPacket):
         return unpack_from('<B', data_length)[0]
 
     def __str__(self):
-        return super().__str__() + ''.join([
-            '{}',
-        ]).format(
-            self.code_name,
-        )
+        return super().__str__() + ''.join(['{}',]).format(self.name.ljust(40),)
