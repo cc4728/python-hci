@@ -1,6 +1,5 @@
 # Python HCI
-This is a library for creating and parsing HCI packets.
-This lib is used for parse hci log，and get useful info from hci log
+This library is used for parse hci log，and get useful info from hci log
 **This library is under construction.**
 
 ## Supported Python Versions
