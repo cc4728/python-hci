@@ -44,6 +44,29 @@ def _parse_pkt_length(buf, pkt_type, pkt_offset):
 def _parse_pkt_type(buf, pkt_offset):
     return unpack_from('<B', buf, offset=pkt_offset)[0]
 
+pre_h = 0
+
+def _parse_date(buf):
+    global pre_h
+    time = unpack_from('>Q', buf, offset=16)[0]
+    us = time - int(time / 1000000) * 1000000
+    tmp = int((time - us) / 1000000)  #s
+    s = tmp - int((tmp / 60)) * 60
+    tmp = int((tmp-s) / 60)           #m
+    m = tmp - int(tmp / 60) * 60
+    tmp = int((tmp - s) / 60)         #h
+    d = int(tmp / 24)
+    h = tmp - d * 24
+
+    # fix btsnoop log bug
+    if pre_h > h:
+        h = pre_h
+    pre_h = h
+    us_str = str(us)
+    us_str = us_str[:4]
+    time_s = str(h).zfill(2) + ":" + str(m).zfill(2)+":"+str(s).zfill(2)+"."+us_str
+    return time_s
+
 
 def from_binary(buf):
     PACKET_TYPE_SIZE_OCTETS = 1
@@ -62,12 +85,13 @@ def from_binary(buf):
             break
 
         pkt_data = buf[pkt_offset:pkt_offset + pkt_length]
+        pkt_timestamp = _parse_date(buf[pkt_offset-PACKET_HEADER_SIZE_OCTETS:pkt_offset])
 
         if (len(pkt_data) < pkt_length):
             incomplete_pkt_data = pkt_data
             break
 
-        pkt = HciPacket(pkt_type, pkt_data[PACKET_TYPE_SIZE_OCTETS:])
+        pkt = HciPacket(pkt_type, pkt_data[PACKET_TYPE_SIZE_OCTETS:],pkt_timestamp)
         pkt = _autocast(pkt)
         pkts.append(pkt)
         #if pkt_type == 4:

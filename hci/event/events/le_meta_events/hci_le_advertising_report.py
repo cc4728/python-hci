@@ -83,34 +83,16 @@ class HCI_LE_Advertising_Report(LE_Meta_Events):
         data = self._get_data(OFFSET, SIZE_OCTETS)
         return data
 
-    def parse_adv(self,data):
+    def parse_adv(self,data,length):
         msg = ""
         offset = 0
-        """
-        undo
-        len(1 octet) +data (type + AD data)
-        """
-        total_len = len(data)
-        #print(data)
-
-        return msg
-        data = unpack_from('<{}B'.format(total_len),data)
-        print(data)
-        while total_len > offset:
-            AD_len = int(data[offset])
-            AD_type = data[offset+1]
-            print("AD_type:", AD_type)
-            print("AD_len:",AD_len)
-            if AD_len >2:
-                AD_data =data[(offset+2):(offset+AD_len+1)]
-            else:
-                AD_data = data[offset+AD_len]
-            print("start:",offset+2,"end:",offset+AD_len+1)
-            print("AD_data:", AD_data)
-            msg += "\t"+AD_type+"  Data:"+str(AD_data) + "\n"
-            offset = offset+1+AD_len
-            print("offset:",offset)
-            print(msg)
+        while length > offset:
+            L = unpack_from('<B', data[offset:offset+1])[0]
+            T = unpack_from('<B', data[offset+1:offset+2])[0]
+            V = data[offset+2:offset+L+1]
+            offset = offset+L+1
+            if T == GAP_Assigned_Numbers.Complete_local_name or T == GAP_Assigned_Numbers.Short_Local_Name:
+                msg += " Name:"+V.decode()
         return msg
 
     @property
@@ -120,11 +102,11 @@ class HCI_LE_Advertising_Report(LE_Meta_Events):
         return unpack_from('<B', data)[0]
 
     def __str__(self):
-        return super().__str__() + ''.join(['Num:{}\t{}\t{}({})\tRssi:{}dBm\n{}']).format(
+        return super().__str__() + ''.join(['Num:{}\t{}\t{}({})\tRssi:{}dBm {}']).format(
             self.num_report,
             HCI_LE_Advertising_Report.Event_Type(self.event_type).name.ljust(18),
             _bytes_to_hex_string(self.addr),
             HCI_LE_Advertising_Report.DeviceType(self.addr_type).name,
             self.rssi,
-            self.parse_adv(self.get_adv_data),
+            self.parse_adv(self.get_adv_data, self.adv_len_total),
         )
