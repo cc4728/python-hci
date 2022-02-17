@@ -88,6 +88,8 @@ class HCI_LE_Advertising_Report(LE_Meta_Events):
         offset = 0
         while length > offset:
             L = unpack_from('<B', data[offset:offset+1])[0]
+            if not L :
+                break
             T = unpack_from('<B', data[offset+1:offset+2])[0]
             V = data[offset+2:offset+L+1]
             offset = offset+L+1
