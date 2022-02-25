@@ -12,7 +12,7 @@ class APCF_Enable(LE_APCF_Command):
 
     class Enable_Status(IntEnum):
         Enabled = 1
-        Disabled = 2
+        Disabled = 0
 
     def __init__(self):
         # TODO generate cmd
