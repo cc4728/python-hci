@@ -117,6 +117,7 @@ def process_logcat(file):
 
     for i in list:
         print(i)
+    return list
 
 def process_hci(file):
     list = []
@@ -145,10 +146,13 @@ def process_hci(file):
 
     for i in list:
         print(i)
+    return list
 
 if __name__ == '__main__':
     logcat_list = []
+    logcat_list_res = []
     hci_list = []
+    hci_list_res = []
     print("Start scan_analysis.py")
     if len (sys.argv) > 1 and sys.argv[1]:
         print ("Now open =>", sys.argv[1])
@@ -162,10 +166,19 @@ if __name__ == '__main__':
 
 #    print(logcat_list)
     for file in logcat_list:
-        process_logcat(file)
+        logcat_list_res = process_logcat(file)
 #    print(hci_list)
     for file in hci_list:
-        process_hci(file)
+        hci_list_res = process_hci(file)
+
+    if hci_list_res or logcat_list_res:
+         with open(REPORT_FILE, 'w') as f:
+            for i in logcat_list_res:
+                line = i+'\n'
+                f.write(line)
+            for i in hci_list_res:
+                line = i+'\n'
+                f.write(line)
 
     del logcat_list
     del hci_list
