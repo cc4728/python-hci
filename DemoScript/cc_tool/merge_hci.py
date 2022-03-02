@@ -6,7 +6,7 @@ import sys
 import time
 
 #hci config
-HCI_FILE = ["btsnoop_hci.cfa","btsnoop_hci.log"]
+HCI_FILE = ["btsnoop_hci.cfa","btsnoop_hci.log","BT_HCI_"]
 
 #save report
 REPORT_FILE = "merge_hci.cfa"
@@ -47,8 +47,8 @@ def process_hci(file):
     with open(file, 'rb') as f:
         #header parse
         header = f.read(16)
-        if not "btsnoop" in header[:7].decode():
-            print("not hci")
+        if not "btsnoop" in header[:7].decode('utf-8', 'ignore'):
+            print("Skip_no_header: ", file)
             return
         #frame parse
         buf = f.read()
@@ -76,10 +76,13 @@ if __name__ == '__main__':
 
 #    print(hci_list)
     for file in hci_list:
-        #print(os.stat(file).st_size)
         process_hci(file)
+        if os.path.exists(REPORT_FILE) and os.stat(file).st_size > 500*1024*1024:
+            print("{} file exceed 500M, Stop process", REPORT_FILE)
+            break
 
-    print("Create:{}\t{:.2f}MB".format(REPORT_FILE,os.stat(REPORT_FILE).st_size/(1024*1024)))
+    if os.path.exists(REPORT_FILE):
+        print("Create:{}\t{:.2f}MB".format(REPORT_FILE,os.stat(REPORT_FILE).st_size/(1024*1024)))
 
     del hci_list
     print("Fininsh scan_analysis.py")
