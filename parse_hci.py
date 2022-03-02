@@ -39,7 +39,7 @@ else:
     #while True:
         #print("Input cli:")
         #file = input()
-    file = 'demo.cfa'
+    file = 'btsnoop_hci.cfa'
     if not is_hci(file):
         exit(0)
     parse(file)
