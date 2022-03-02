@@ -22,7 +22,7 @@ RESULT_TAG = "GenericBluetoothWizard: Utils__["
 HCI_FILE = ["btsnoop_hci.cfa","btsnoop_hci.log"]
 HCI_Filter = ["HCI_Inquiry","HCI_LE_Set_Scan_Enable","HCI_Inquiry_Cancel",
               "HCI_LE_Advertising_Report","APCF","HCI_LE_Set_Scan_Parameters",
-              "HCI_Extended_Inquiry_Result"]
+              "HCI_Extended_Inquiry_Result","HCI_LE_Extended_Advertising_Report"]
 
 
 #save report
