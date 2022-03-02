@@ -166,10 +166,10 @@ if __name__ == '__main__':
 
 #    print(logcat_list)
     for file in logcat_list:
-        logcat_list_res = process_logcat(file)
+        logcat_list_res += process_logcat(file)
 #    print(hci_list)
     for file in hci_list:
-        hci_list_res = process_hci(file)
+        hci_list_res += process_hci(file)
 
     if hci_list_res or logcat_list_res:
          with open(REPORT_FILE, 'w') as f:
