@@ -80,11 +80,11 @@ if __name__ == '__main__':
         else:
             name = file
         if not REPORT_FILE:
-            REPORT_FILE = datetime.datetime.now().strftime('%H%M%S')+'_'+name
+            REPORT_FILE = datetime.datetime.now().strftime('%M%S_%f')+'_'+name
         process_hci(file)
         if os.path.exists(REPORT_FILE) and os.stat(REPORT_FILE).st_size > 300*1024*1024:
                 print("Create:{}\t{:.2f}MB".format(REPORT_FILE, os.stat(REPORT_FILE).st_size / (1024 * 1024)))
-                REPORT_FILE = datetime.datetime.now().strftime('%H%M%S') + '_' + name
+                REPORT_FILE = datetime.datetime.now().strftime('%M%S_%f') + '_' + name
 
     del hci_list
     print("Fininsh merge_hci.py")
