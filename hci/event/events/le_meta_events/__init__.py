@@ -1,1 +1,2 @@
 from .hci_le_advertising_report import HCI_LE_Advertising_Report
+from .hci_le_extended_advertising_report import HCI_LE_Extended_Advertising_Report
