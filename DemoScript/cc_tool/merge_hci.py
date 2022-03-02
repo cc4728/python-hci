@@ -4,12 +4,13 @@ import os
 import os.path
 import sys
 import time
+import datetime
 
 #hci config
 HCI_FILE = ["btsnoop_hci.cfa","btsnoop_hci.log","BT_HCI_"]
 
 #save report
-REPORT_FILE = "merge_hci.cfa"
+REPORT_FILE = ""
 
 def get_all_file(filepath, list, key=None):
     if not os.path.exists(filepath):
@@ -61,6 +62,7 @@ def process_hci(file):
 
 if __name__ == '__main__':
     hci_list = []
+    name = ""
     print("Start merge_hci.py")
     if len (sys.argv) > 1 and sys.argv[1]:
         print ("Now open =>", sys.argv[1])
@@ -70,22 +72,22 @@ if __name__ == '__main__':
     else:
         print("Please input file path, and retry")
 
-    if os.path.exists(REPORT_FILE):
-        print("Remove old file:",REPORT_FILE)
-        os.remove(REPORT_FILE)
-
 #    print(hci_list)
     for file in hci_list:
+        #create new result file
+        if '\\' in file:
+            name = file.split('\\')[-1]
+        else:
+            name = file
+        if not REPORT_FILE:
+            REPORT_FILE = datetime.datetime.now().strftime('%H%M%S')+'_'+name
         process_hci(file)
-        if os.path.exists(REPORT_FILE) and os.stat(file).st_size > 500*1024*1024:
-            print("{} file exceed 500M, Stop process", REPORT_FILE)
-            break
-
-    if os.path.exists(REPORT_FILE):
-        print("Create:{}\t{:.2f}MB".format(REPORT_FILE,os.stat(REPORT_FILE).st_size/(1024*1024)))
+        if os.path.exists(REPORT_FILE) and os.stat(REPORT_FILE).st_size > 300*1024*1024:
+                print("Create:{}\t{:.2f}MB".format(REPORT_FILE, os.stat(REPORT_FILE).st_size / (1024 * 1024)))
+                REPORT_FILE = datetime.datetime.now().strftime('%H%M%S') + '_' + name
 
     del hci_list
-    print("Fininsh scan_analysis.py")
+    print("Fininsh merge_hci.py")
     print("auto close 3s later......")
     time.sleep(3)
 
