@@ -102,3 +102,7 @@ ENV/
 demo.frm
 demo.fsc
 /demo.bes
+DemoScript/cc_tool/merge_hci.bes
+DemoScript/cc_tool/merge_hci.cfa
+DemoScript/cc_tool/merge_hci.frm
+DemoScript/cc_tool/merge_hci.fsc
