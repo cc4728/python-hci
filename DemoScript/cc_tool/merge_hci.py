@@ -59,6 +59,26 @@ def process_hci(file):
             w.write(buf)
         print("Fininsh_process:{}\t{:.2f}MB".format(file, os.stat(file).st_size / (1024 * 1024)))
 
+def remove_repeat_path(file_path_list):
+    # 去掉重复路径
+    return list(set(file_path_list))
+
+def remove_repeat_name(file_path_list):
+    names_list = []
+    tmp = remove_repeat_path(file_path_list)
+    # 去掉重复文件名
+    for i in file_path_list:
+        name = ""
+        if '\\' in i:
+            names = i.split('\\')
+            name = names[-1]
+        else:
+            name = i
+        if not name in names_list:
+            names_list.append(name)
+        else:
+            tmp.remove(i)
+    return tmp
 
 if __name__ == '__main__':
     hci_list = []
@@ -67,10 +87,17 @@ if __name__ == '__main__':
     if len (sys.argv) > 1 and sys.argv[1]:
         print ("Now open =>", sys.argv[1])
         path = sys.argv[1]
-        for key in HCI_FILE:
-            get_all_file(path, hci_list, key)
     else:
-        print("Please input file path, and retry")
+        path = os.getcwd()
+        print ("Now open =>", path)
+
+    for key in HCI_FILE:
+        get_all_file(path, hci_list, key)
+
+#remove repreat name
+    hci_list = remove_repeat_name(hci_list)
+    print (len(hci_list))
+
 
 #    print(hci_list)
     for file in hci_list:
