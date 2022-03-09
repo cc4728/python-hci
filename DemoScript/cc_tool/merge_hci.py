@@ -42,8 +42,16 @@ def get_all_file(filepath, list, key=None):
                 names = file.split('\\')
                 if key in names[-1]:
                     list.append(file)
-
-def process_hci(file):
+"""
+2 different mode of merger hci
+direct_merge = 1  mode:
+    files should be all hci log, needn't check hci header
+    strip header and merge the log into one hci file
+dircet_merge = None mode:
+    files may have other types log, we should check hci header
+    and only merger hci log
+"""
+def process_hci(file,direct_merge=None):
 
     with open(file, 'rb') as f:
         #header parse
