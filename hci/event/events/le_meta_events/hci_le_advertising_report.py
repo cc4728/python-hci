@@ -94,7 +94,7 @@ class HCI_LE_Advertising_Report(LE_Meta_Events):
             V = data[offset+2:offset+L+1]
             offset = offset+L+1
             if T == GAP_Assigned_Numbers.Complete_local_name or T == GAP_Assigned_Numbers.Short_Local_Name:
-                msg += " Name:"+V.decode()
+                msg += " Name:"+V.decode('utf-8', 'ignore')
         return msg
 
     @property
