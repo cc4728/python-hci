@@ -79,6 +79,8 @@ def from_binary(buf):
         try:
             pkt_offset += PACKET_HEADER_SIZE_OCTETS
             pkt_type = _parse_pkt_type(buf, pkt_offset)
+            if not pkt_type :
+                break
             pkt_length = _parse_pkt_length(buf, pkt_type, pkt_offset)
         except error:
             incomplete_pkt_data = buf[pkt_offset:]
