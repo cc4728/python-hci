@@ -23,7 +23,7 @@ Then run:
 
 ```
 ## Build
-
+`pip uninstall hci`
 `python -m pip install -U wheel setuptools`
 `python setup.py sdist bdist_wheel`
 
