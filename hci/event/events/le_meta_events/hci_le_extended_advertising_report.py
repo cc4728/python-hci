@@ -84,6 +84,13 @@ class HCI_LE_Extended_Advertising_Report(LE_Meta_Events):
         data = self._get_data(OFFSET, SIZE_OCTETS)
         return data
 
+    @property
+    def get_event_type(self):
+        try:
+            return HCI_LE_Extended_Advertising_Report.Event_Type(self.event_type).name.ljust(18)
+        except:
+            return "NOT_SUPPORT_EA_TYPE"
+
     def parse_adv(self,data,length):
         msg = ""
         offset = 0
@@ -102,7 +109,7 @@ class HCI_LE_Extended_Advertising_Report(LE_Meta_Events):
     def __str__(self):
         return super().__str__() + ''.join([' Num:{}\t{}\t{}({})\tRssi:{}dBm {}']).format(
             self.num_report,
-            HCI_LE_Extended_Advertising_Report.Event_Type(self.event_type).name.ljust(18),
+            self.get_event_type,
             _bytes_to_hex_string(self.addr),
             HCI_LE_Extended_Advertising_Report.DeviceType(self.addr_type).name,
             self.rssi,
