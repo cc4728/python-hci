@@ -77,7 +77,6 @@ class HCI_LE_Extended_Advertising_Report(LE_Meta_Events):
             type = str(hex(code))
         return type
 
-
     @property
     def get_adv_data(self):
         OFFSET, SIZE_OCTETS = HCI_LE_Extended_Advertising_Report.ADV_DATA_OFFSET, self.adv_len_total
