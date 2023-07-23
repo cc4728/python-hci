@@ -69,6 +69,9 @@ def parse(src_file,des_file,filter = None):
     if not is_hci(src_file):
         return list
 
+    if os.path.exists(des_file):
+        os.remove(des_file)
+
     with open(src_file, 'rb') as f:
         #header parse
         header = f.read(16)

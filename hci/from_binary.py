@@ -67,6 +67,17 @@ def _parse_date(buf):
     time_s = str(h).zfill(2) + ":" + str(m).zfill(2)+":"+str(s).zfill(2)+"."+us_str
     return time_s
 
+#time string to number 07:51:55.1658 -> 7*60*60+51*60+55+0.1658 (s)
+def ts2num(timestr):
+    time = -1
+    if not len(timestr) == 13:
+        return time
+    h_str = timestr[:2]
+    m_str = timestr[3:5]
+    s_str = timestr[6:8]
+    u_str = "0."+timestr[-4:]
+    #print("%s %s %s %s"%(h_str,m_str,s_str,u_str))
+    return int(h_str)*60*60+int(m_str)*60+int(s_str)+float(u_str)
 
 def from_binary(buf):
     PACKET_TYPE_SIZE_OCTETS = 1
