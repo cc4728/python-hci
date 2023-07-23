@@ -10,6 +10,7 @@ from .le_enable_encryption import HCI_LE_Enable_Encryption
 from .le_set_address_resolution_enable import HCI_LE_Set_Address_Resolution_Enable
 from .hci_write_page_timeout import HCI_Write_Page_Timeout
 from .le_apcf_command_pkt import LE_APCF_Command
+from .le_set_extended_scan_enable import HCI_LE_Set_Extended_Scan_Enable
 
 
 
