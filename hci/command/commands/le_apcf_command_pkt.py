@@ -39,7 +39,10 @@ class LE_APCF_Command(CommandPacket):
     @property
     def sub_name(self):
         if not self.subOpcodeName:
-            self.subOpcodeName = LE_APCF_Command.SubOpcode(self.get_sub_opcode).name
+            try:
+                self.subOpcodeName = LE_APCF_Command.SubOpcode(self.get_sub_opcode).name
+            except:
+                self.subOpcodeName = "UN_KNOW"
         return self.subOpcodeName
 
     def __str__(self):
