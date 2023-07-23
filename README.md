@@ -17,14 +17,21 @@ This library currently supports **Python 3.5** and possibly latter versions.
 ### Parse binary packet:
 
 ```
+Make sure Wheel and the latest version of setuptools is installed on your system by running:
+python -m pip install -U wheel setuptools
+Then run:
 
 ```
+## Build
 
-## Installation
+`python -m pip install -U wheel setuptools`
+`python setup.py sdist bdist_wheel`
+
+## Installation with wheel
 
 For installing an official release, you may issue the following command:
 
-`pip install hci`
+`pip install hci-1.0.0-py3-none-any.whl`
 
 
 ## References
