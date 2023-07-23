@@ -3,7 +3,6 @@ from struct import unpack_from
 
 from hci.event import EventPacket
 
-
 class LE_Meta_Events(EventPacket):
     SubCodeName = None
 
