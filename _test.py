@@ -7,7 +7,6 @@ import time
 import datetime
 import hci
 
-
 if __name__ == '__main__':
     hci_list = []
     result = ""
